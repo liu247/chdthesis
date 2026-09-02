@@ -684,23 +684,24 @@
 
 % 处理 \opt{fontset}
 \ifchd@fontset@auto
-  \ifchd@system@windows
-    \chdsetup{fontset = windows}
-  \else
-    \IfFontExistsTF{SimSun}{
+  % 优先使用 Noto CJK，使 macOS 与 Overleaf/Linux 的输出一致。
+  \IfFontExistsTF{Noto Serif CJK SC}{
+    \chdsetup{fontset = ubuntu}
+  }{
+    \ifchd@system@windows
       \chdsetup{fontset = windows}
-    }{
-      \ifchd@system@mac
-        \chdsetup{fontset = mac}
-      \else
-        \IfFontExistsTF{Noto Serif CJK SC}{
-          \chdsetup{fontset = ubuntu}
-        }{
+    \else
+      \IfFontExistsTF{SimSun}{
+        \chdsetup{fontset = windows}
+      }{
+        \ifchd@system@mac
+          \chdsetup{fontset = mac}
+        \else
           \chdsetup{fontset = fandol}
-        }
-      \fi
-    }
-  \fi
+        \fi
+      }
+    \fi
+  }
 \fi
 
 % 《撰写手册》要求西文字体使用 Times New Roman 和 Arial，
@@ -1021,11 +1022,16 @@
   ]%
   \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[
     UprightFont    = * Light,
-    UprightFont    = * Bold,
+    BoldFont       = * Bold,
     Script         = CJK,
   ]%
   \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}[
     BoldFont       = * Medium,
+    Script         = CJK,
+  ]%
+  \setCJKfamilyfont{zhzs}{Noto Serif CJK SC}[
+    UprightFont    = * Light,
+    BoldFont       = * Bold,
     Script         = CJK,
   ]%
   \setCJKfamilyfont{zhfs}{FandolFang}[
@@ -2035,7 +2041,7 @@
 
 % 用 \pkg{ctex} 的接口设置全部章节标题格式。
 
-% 各章标题：黑体 16 磅加粗居中，单倍行距，段前 11 磅（0.5 行），段后 13.5 磅（0.5 行），
+% 各章标题：黑体 16 磅居中，单倍行距，段前 11 磅（0.5 行），段后 13.5 磅（0.5 行），
 % 章序号与章名间空半字宽。
 
 % 由于 Word 模板中使用“单倍行距”，还“对齐到网格”，这在 TeX 中不容易实现。
@@ -2045,7 +2051,7 @@
 % 另外 \pkg{ctex} v2.2 前的beforeskip的符号有特殊意义。
 \ctexset{
   chapter = {
-    format      = \centering\heiti\bfseries\fontsize{16bp}{26.7bp}\selectfont,
+    format      = \centering\heiti\fontsize{16bp}{26.7bp}\selectfont,
     nameformat  = {},
     titleformat = \chd@spacetitle,
     number      = \chinese{chapter},
@@ -2060,7 +2066,7 @@
 % 序号与题名间空半字宽。
 \ctexset{
   section = {
-    format     = \vspace*{1bp}\heiti\bfseries\fontsize{14bp}{23.33bp}\selectfont,
+    format     = \vspace*{1bp}\heiti\fontsize{14bp}{23.33bp}\selectfont,
     aftername  = \hspace{0.5\ccwd},
     beforeskip = 10bp,
     afterskip  = 0.2bp,
@@ -2069,7 +2075,7 @@
   % 二级节标题：黑体 12 磅，左缩进两字，单倍行距，段前 10 磅，段后 0.4 磅，
   % 序号与题名间空半字宽。
   subsection = {
-    format     = \heiti\bfseries\fontsize{12bp}{21.67bp}\selectfont,
+    format     = \heiti\fontsize{12bp}{21.67bp}\selectfont,
     aftername  = \hspace{0.5\ccwd},
     beforeskip = 10bp,
     afterskip  = 0.4bp,

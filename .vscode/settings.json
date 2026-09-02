@@ -1,0 +1,113 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash",
+            "args": [
+                "-l"
+            ]
+        }
+    },
+    "terminal.integrated.inheritEnv": true,
+    "terminal.integrated.env.linux": {
+        "CONDA_AUTO_ACTIVATE_BASE": "false"
+    },
+    "terminal.integrated.automationProfile.linux": {
+        "path": "/bin/bash",
+        "args": [
+            "-l"
+        ]
+    },
+    "python.terminal.activateEnvironment": false,
+    "terminal.integrated.shellIntegration.enabled": false,
+    "terminal.integrated.gpuAcceleration": "off",
+    "terminal.integrated.enablePersistentSessions": false,
+    "kiroAgent.configureMCP": "Enabled",
+
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.showContextMenu": true,
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.message.error.show": false,
+    "latex-workshop.message.warning.show": false,
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-xelatex",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (XeLaTeX)",
+            "tools": [
+                "latexmk-xelatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.blg",
+        "*.log",
+        "*.fls",
+        "*.fdb_latexmk",
+        "*.xdv",
+        "*.auxlock",
+        "*.ilg",
+        "*.ind",
+        "*.idx",
+        "*.glo",
+        "*.gls",
+        "*.glg",
+        "*.ist",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.loa",
+        "*.nav",
+        "*.snm",
+        "*.vrb",
+        "*.bcf",
+        "*.run.xml"
+    ],
+    "latex-workshop.latex.clean.method": "glob",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.build.enableMagicComments": false,
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 800,
+    "editor.unicodeHighlight.allowedLocales": {
+        "zh-hans": true,
+        "zh-hant": true,
+        "en": true
+    },
+    "[latex]": {
+        "editor.defaultFormatter": "James-Yu.latex-workshop"
+    }
+}

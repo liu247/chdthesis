@@ -19,6 +19,7 @@
 \copyrightpage
         
 \frontmatter
+% 摘要、符号说明等示例文件暂不载入，保留在 chapters 目录中供后续写作参考。
 \input{chapters/abstract.tex}
 \tableofcontents
 % \listoffigures
@@ -26,19 +27,22 @@
 \input{chapters/notation.tex}
 
 \mainmatter
-\input{chapters/intro.tex}
-\input{chapters/floats.tex}
-\input{chapters/math.tex}
-\input{chapters/citations.tex}
+\input{chapters/chapter01_introduction.tex}
+\input{chapters/chapter02_graph_construction_qa.tex}
+\input{chapters/chapter03_heterogeneous_semantic_qa.tex}
+\input{chapters/chapter04_cross_modal_relation.tex}
+\input{chapters/chapter05_2d_perceptual_assessment.tex}
+\input{chapters/chapter06_4d_reconstruction.tex}
+\input{chapters/chapter07_conclusion.tex}
 
 \bibliography{bib/chd}  % 参考文献使用 BibTeX 编译
 % \printbibliography       % 参考文献使用 BibLaTeX 编译
 
 \appendix
-\input{chapters/complementary.tex}
+% \input{chapters/complementary.tex}
 
 \backmatter
-\input{chapters/publications.tex}
-\input{chapters/acknowledgements.tex}
+% \input{chapters/publications.tex}
+% \input{chapters/acknowledgements.tex}
 
 \end{document}
