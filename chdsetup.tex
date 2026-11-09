@@ -1,8 +1,8 @@
 % !TeX root = ./main.tex
 
 \chdsetup{
-  title              = {面向交通信息认知与场景重建的多层次图增强技术研究},
-  title*             = {Research on Multi-Level Graph-Enhanced Techniques for Traffic Information Cognition and Scene Reconstruction},
+  title              = {面向交通信息认知与场景生成的多层次图增强技术研究},
+  title*             = {Research on Multi-Level Graph-Enhanced Techniques for Traffic Information Cognition and Scene Generation},
   author             = {刘泽东},
   author*            = {Liu Zedong},
   speciality         = {交通信息工程及控制},
@@ -33,6 +33,12 @@
 
 % 插图
 \usepackage{graphicx}
+
+% 实验参数曲线与知识图实例，图形文字沿用论文正文字体。
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{arrows.meta,positioning,calc}
 
 % 三线表
 \usepackage{booktabs}
@@ -92,6 +98,14 @@
 \DeclareRobustCommand\env[1]{\texttt{#1}}
 \DeclareRobustCommand\pkg[1]{\textsf{#1}}
 \DeclareRobustCommand\file[1]{\nolinkurl{#1}}
+
+% comment 宏包用于注释掉大段内容
+\usepackage{comment}
+
+\usepackage{xcolor}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
 
 % hyperref 宏包在最后调用
 \usepackage{hyperref}

@@ -1,0 +1,15 @@
+case,question_id,triple_id,subject,predicate,object,object_label,retrieved,is_gold_support
+a,A-1049504::shared_street_time_period::A-709621,triple::534bf843fb72c3e9,accident::A-1049504,ON_STREET,street::RI::warwick::warwick ave,Warwick Ave,1,1
+a,A-1049504::shared_street_time_period::A-709621,triple::f1c3f1af73e3f079,accident::A-1049504,HAPPEN_AT,time_period::day_off_peak,Day_Off_Peak,1,1
+a,A-1049504::shared_street_time_period::A-709621,triple::75169fd0d1e5f75d,accident::A-709621,ON_STREET,street::RI::warwick::warwick ave,Warwick Ave,1,1
+a,A-1049504::shared_street_time_period::A-709621,triple::6199ce41d7f6daff,accident::A-709621,HAPPEN_AT,time_period::day_off_peak,Day_Off_Peak,1,1
+b,A-3181178::shared_street_time_period::A-209507,triple::1cbc57de0ddbb567,accident::A-3181178,ON_STREET,street::RI::providence::charles st,Charles St,1,1
+b,A-3181178::shared_street_time_period::A-209507,triple::1e5d114d0fe403b7,accident::A-3181178,HAPPEN_AT,time_period::day_off_peak,Day_Off_Peak,1,1
+b,A-3181178::shared_street_time_period::A-209507,triple::e98eaebbc3ca9e49,accident::A-209507,ON_STREET,street::RI::providence::charles st,Charles St,1,1
+b,A-3181178::shared_street_time_period::A-209507,triple::820dad1225a48327,accident::A-209507,HAPPEN_AT,time_period::day_off_peak,Day_Off_Peak,1,1
+b,A-3181178::shared_street_time_period::A-209507,triple::ce52ee7baeaa64ac,accident::A-2373379,ON_STREET,street::RI::providence::charles st,Charles St,1,0
+c,A-1016344::shared_street_weather_impact::A-695042,triple::478f0a3322d4af69,accident::A-1016344,ON_STREET,street::RI::wyoming::i-95 s,I-95 S,1,1
+c,A-1016344::shared_street_weather_impact::A-695042,triple::ffade73b26b773aa,accident::A-1016344,HAS_WEATHER,weather::clear,Clear,1,1
+c,A-1016344::shared_street_weather_impact::A-695042,triple::5c9be65ccaca7240,accident::A-695042,ON_STREET,street::RI::wyoming::i-95 s,I-95 S,1,1
+c,A-1016344::shared_street_weather_impact::A-695042,triple::df67c87b000afc0d,accident::A-695042,HAS_WEATHER,weather::clear,Clear,0,1
+c,A-1016344::shared_street_weather_impact::A-695042,triple::27251e7939b15ea4,accident::A-695042,HAS_TRAFFIC_IMPACT,traffic_impact::3,3,1,1

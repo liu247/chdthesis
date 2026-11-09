@@ -1073,6 +1073,11 @@
     UprightFont = *-Regular,
     BoldFont    = *-Bold,
   ]%
+  \setCJKfamilyfont{zhzs}{FandolSong}[
+    Extension   = .otf,
+    UprightFont = *-Regular,
+    BoldFont    = *-Bold,
+  ]%
   \setCJKfamilyfont{zhfs}{FandolFang}[
     Extension   = .otf,
     UprightFont = *-Regular,

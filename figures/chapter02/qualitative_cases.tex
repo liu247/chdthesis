@@ -1,0 +1,68 @@
+% Facts: data/formal_20261027/graphs/test/triples.jsonl and test.jsonl.
+% Retrieval and predictions: full_full_seed17/predictions.jsonl.
+% Exact fact identifiers and retrieval states are retained in qualitative_cases.csv.
+% Only query-condition relations are shown; this is not the full retrieved graph.
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  font=\fontsize{10.5}{12.5}\selectfont,
+  event/.style={draw=gray!70,line width=0.6pt,fill=white,rectangle,minimum width=2.2cm,minimum height=0.60cm,inner sep=3pt},
+  context/.style={draw=gray!70,line width=0.6pt,fill=white,rectangle,minimum width=3.05cm,minimum height=0.60cm,inner sep=3pt},
+  predicted/.style={draw=orange!85!black,line width=1.0pt},
+  observed/.style={->,>=stealth,draw=blue!65!black,line width=0.8pt},
+  missing/.style={->,>=stealth,draw=red!75!black,dashed,line width=0.8pt},
+  relation/.style={font=\fontsize{9.5}{11}\selectfont,fill=white,inner sep=1.2pt},
+  note/.style={font=\fontsize{9.5}{11}\selectfont}
+]
+  % (a) Both road and time-period support were retrieved.
+  \node[event] (a-root) at (1.3,9.5) {A-1049504};
+  \node[note,above=2pt] at (a-root.north) {锚点事故};
+  \node[context] (a-road) at (6.5,10.15) {Warwick Ave};
+  \node[context] (a-time) at (6.5,8.85) {日间平峰};
+  \node[event,predicted] (a-answer) at (12.0,9.5) {A-709621};
+  \node[note,above=2pt] at (a-answer.north) {标准／预测答案};
+  \draw[observed] (a-root) -- node[relation,above] {道路} (a-road);
+  \draw[observed] (a-root) -- node[relation,below] {时段} (a-time);
+  \draw[observed] (a-answer) -- node[relation,above] {道路} (a-road);
+  \draw[observed] (a-answer) -- node[relation,below] {时段} (a-time);
+  \node at (7.5,8.05) {(a) 答案正确且证据完整（4/4）};
+
+  % (b) The gold target has complete support, but a road-only distractor wins.
+  \node[event] (b-root) at (1.3,6.2) {A-3181178};
+  \node[note,above=2pt] at (b-root.north) {锚点事故};
+  \node[context] (b-road) at (6.5,6.9) {Charles St};
+  \node[context] (b-time) at (6.5,5.5) {日间平峰};
+  \node[event] (b-gold) at (12.0,5.7) {A-209507};
+  \node[note,below=2pt] at (b-gold.south) {标准答案};
+  \node[event,predicted] (b-prediction) at (12.0,7.0) {A-2373379};
+  \node[note,above=2pt] at (b-prediction.north) {预测答案};
+  \draw[observed] (b-root) -- node[relation,above] {道路} (b-road);
+  \draw[observed] (b-root) -- node[relation,below] {时段} (b-time);
+  \draw[observed] (b-gold) -- node[relation,sloped,above,pos=0.48] {道路} (b-road);
+  \draw[observed] (b-gold) -- node[relation,below] {时段} (b-time);
+  \draw[observed] (b-prediction) -- node[relation,above] {道路} (b-road);
+  \node at (7.5,4.6) {(b) 证据完整但候选排序错误（4/4）};
+
+  % (c) The level value is correct although the target's weather edge is absent.
+  \node[event] (c-root) at (1.3,2.9) {A-1016344};
+  \node[note,above=2pt] at (c-root.north) {锚点事故};
+  \node[context,minimum width=2.6cm] (c-road) at (5.8,3.5) {I-95 S};
+  \node[context,minimum width=2.6cm] (c-weather) at (5.8,2.2) {晴朗};
+  \node[event] (c-target) at (10.2,2.9) {A-695042};
+  \node[note,above=2pt] at (c-target.north) {目标事故};
+  \node[event,predicted,minimum width=1.55cm] (c-level) at (14.1,2.9) {等级3};
+  \node[note,below=2pt] at (c-level.south) {预测值};
+  \draw[observed] (c-root) -- node[relation,above] {道路} (c-road);
+  \draw[observed] (c-root) -- node[relation,below] {天气} (c-weather);
+  \draw[observed] (c-target) -- node[relation,above] {道路} (c-road);
+  \draw[missing] (c-target) -- node[relation,below] {天气} (c-weather);
+  \draw[observed] (c-target) -- node[relation,above] {影响等级} (c-level);
+  \node at (7.5,1.45) {(c) 答案值正确但证据不完整（4/5）};
+
+  % Common legend. Dashed red edges are annotated gold facts, not observations.
+  \draw[observed] (0.4,0.40) -- (1.25,0.40);
+  \node[note,anchor=west] at (1.38,0.40) {已检索关系};
+  \draw[missing] (5.0,0.40) -- (5.85,0.40);
+  \node[note,anchor=west] at (5.98,0.40) {未检索的标准支持边};
+  \node[draw=orange!85!black,line width=1.0pt,minimum width=0.60cm,minimum height=0.35cm,inner sep=0pt] at (11.0,0.40) {};
+  \node[note,anchor=west] at (11.45,0.40) {预测实体或字段值};
+\end{tikzpicture}

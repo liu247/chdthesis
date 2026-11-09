@@ -1,0 +1,80 @@
+% Editable vector source. Compile with xelatex overall_framework.tex.
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usetikzlibrary{arrows.meta,calc}
+\definecolor{bluefill}{HTML}{E4EDF7}
+\definecolor{greenfill}{HTML}{E6EEDB}
+\definecolor{peachfill}{HTML}{F8E6D8}
+\definecolor{violetfill}{HTML}{ECE7F3}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\fontsize{8.5}{11}\selectfont,
+ box/.style={draw=black!70,rounded corners=1.5pt,minimum height=.53cm,align=center,inner sep=3pt},
+ group/.style={draw=black!75,dashed,rounded corners=3pt,line width=.6pt},
+ flow/.style={-{Stealth[length=1.7mm]},line width=.65pt},
+ cond/.style={flow,dashed,draw=black!65},
+ title/.style={font=\small\bfseries,anchor=west},
+ tinylabel/.style={font=\footnotesize,align=center}]
+\path[use as bounding box] (0,0) rectangle (17,9.2);
+% Domain knowledge preparation.
+\draw[group,fill=bluefill!20] (.08,6.75) rectangle (16.92,9.12);
+\node[title] at (.28,8.85) {交通事故知识图谱构建};
+\node[box,fill=white,minimum width=2.65cm,minimum height=1.08cm] (records) at (1.75,7.85) {交通事故记录\\结构化字段／事故描述};
+\node[box,fill=bluefill,minimum width=2.6cm] (extract) at (5.1,7.85) {实体与语义关系提取};
+\node[box,fill=bluefill,minimum width=2.1cm] (align) at (8.15,7.85) {交通实体消歧};
+\node[box,fill=bluefill,minimum width=2.2cm] (triples) at (11,7.85) {事故事实三元组};
+\draw[flow] (records)--(extract);
+\draw[flow] (extract)--(align);
+\draw[flow] (align)--(triples);
+\draw[flow] (triples.east)--(12.65,7.85);
+\begin{scope}[shift={(14,7.93)}]
+\coordinate (g1) at (-.95,.35);\coordinate (g2) at (-.15,.62);
+\coordinate (g3) at (-.65,-.4);\coordinate (g4) at (.75,.4);
+\coordinate (g5) at (.05,-.18);\coordinate (g6) at (.95,-.42);
+\foreach \a/\b in {1/2,1/3,2/4,2/5,3/5,4/5,4/6,5/6}
+  \draw[black!60,line width=.5pt] (g\a)--(g\b);
+\foreach \i in {1,2,3,4,5,6}
+  \node[circle,draw=black!65,fill=bluefill,minimum size=3mm,inner sep=0pt] at (g\i) {};
+\node[circle,draw=black!65,fill=peachfill,minimum size=3mm,inner sep=0pt] at (g5) {};
+\end{scope}
+\node[tinylabel] (kg) at (14.2,7.05) {交通事故知识图谱};
+% Query bus. All three online modules receive the complete question.
+\node[box,fill=white,minimum width=2.7cm] (q) at (1.6,6.13) {自然语言问题};
+\draw[cond] (q.east)--(14.2,6.13);
+\node[tinylabel,fill=white,inner sep=2pt] at (8.5,6.13) {问题语义};
+% Retrieval panel.
+\draw[group,fill=bluefill!15] (.08,.2) rectangle (5.42,5.65);
+\node[title] at (.28,5.35) {自适应知识图构建};
+\node[box,fill=bluefill,minimum width=3.85cm] (seed) at (2.75,4.7) {问题实体链接与候选范围确定};
+\node[box,fill=bluefill,minimum width=3.85cm] (ret) at (2.75,3.65) {RoBERTa 语义匹配与事实筛选};
+\node[box,fill=bluefill,minimum width=3.85cm] (update) at (2.75,2.6) {问题上下文更新与关联实体扩展};
+\node[box,fill=white,minimum width=3.85cm] (subgraph) at (2.75,1.18) {问题相关图\\初始关系与动态关系};
+\draw[flow] (seed)--(ret);\draw[flow] (ret)--(update);
+\draw[flow] (update)--node[right,tinylabel] {满足停止条件} (subgraph);
+\draw[flow] (update.west)--(.32,2.6)--(.32,3.65)--(ret.west);
+\node[tinylabel,rotate=90,fill=white,inner sep=1pt] at (.32,3.13) {继续检索};
+\draw[cond] (1.6,6.13)--(1.6,5.85)-|(seed.north);
+% Encoding and entity prediction panel.
+\draw[group,fill=greenfill!18] (5.82,.2) rectangle (11.12,5.65);
+\node[title] at (6.02,5.35) {知识增强与答案预测};
+\node[box,fill=greenfill,minimum width=3.95cm] (node) at (8.47,4.7) {节点语义与检索特征编码};
+\node[box,fill=greenfill,minimum width=3.95cm] (gcn) at (8.47,3.65) {图卷积邻域信息传播};
+\node[box,fill=greenfill,minimum width=3.95cm] (mamba) at (8.47,2.6) {问题引导的 Mamba 选择性过滤};
+\node[box,fill=greenfill,minimum width=3.95cm] (pred) at (8.47,1.18) {候选实体评分与答案预测};
+\draw[flow] (node)--(gcn);\draw[flow] (gcn)--(mamba);\draw[flow] (mamba)--(pred);
+\draw[flow] (subgraph.east)--(5.62,1.18)--(5.62,4.7)--(node.west);
+\draw[cond] (8.47,6.13)--(11.32,6.13)--(11.32,2.6)--(mamba.east);
+% Natural-language realization panel.
+\draw[group,fill=peachfill!18] (11.72,.2) rectangle (16.92,5.65);
+\node[title] at (11.92,5.35) {自然答案优化};
+\node[box,fill=peachfill,minimum width=3.85cm] (prompt) at (14.32,4.7) {问题、基础答案与检索知识};
+\node[box,fill=violetfill,minimum width=3.85cm] (examples) at (14.32,3.65) {任务说明与上下文示例};
+\node[box,fill=peachfill,minimum width=3.85cm] (llm) at (14.32,2.6) {预训练语言模型};
+\node[box,fill=white,minimum width=3.85cm] (answer) at (14.32,1.18) {自然语言答案};
+\draw[flow] (prompt)--(examples);\draw[flow] (examples)--(llm);\draw[flow] (llm)--(answer);
+\draw[flow] (pred.east)--(11.52,1.18)--(11.52,4.7)--(prompt.west);
+\draw[cond] (14.2,6.13)--(prompt.north);
+% Knowledge source enters the retrieval stage independently of the query.
+\draw[flow] (kg.south)--(14.2,6.55)--(5.6,6.55)--(5.6,3.65)--(ret.east);
+\node[tinylabel,fill=white,inner sep=1pt] at (6.5,6.55) {图谱事实};
+\end{tikzpicture}
+\end{document}

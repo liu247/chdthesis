@@ -2,7 +2,7 @@
 % !TeX program = xelatex
 % !TeX spellcheck = en_US
 
-\documentclass[degree=doctor,output=print]{chdthesis}
+\documentclass[degree=doctor,output=print,fontset=fandol]{chdthesis}
 % degree      = doctor | master | bachelor
 % degree-type = academic | professional
 % language    = chinese | english
@@ -28,14 +28,13 @@
 
 \mainmatter
 \input{chapters/chapter01_introduction.tex}
-\input{chapters/chapter02_graph_construction_qa.tex}
+\input{chapters/chapter02_adaptive_graph_answer_generation.tex}
 \input{chapters/chapter03_heterogeneous_semantic_qa.tex}
-\input{chapters/chapter04_cross_modal_relation.tex}
-\input{chapters/chapter05_2d_perceptual_assessment.tex}
-\input{chapters/chapter06_4d_reconstruction.tex}
-\input{chapters/chapter07_conclusion.tex}
+\input{chapters/chapter04_2d_perceptual_assessment.tex}
+\input{chapters/chapter05_4d_reconstruction.tex}
+\input{chapters/chapter06_conclusion.tex}
 
-\bibliography{bib/chd}  % 参考文献使用 BibTeX 编译
+\bibliography{bib/chd,bib/chapter02_sources}  % 参考文献使用 BibTeX 编译
 % \printbibliography       % 参考文献使用 BibLaTeX 编译
 
 \appendix
