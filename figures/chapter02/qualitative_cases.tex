@@ -1,68 +1,70 @@
-% Facts: data/formal_20261027/graphs/test/triples.jsonl and test.jsonl.
-% Retrieval and predictions: full_full_seed17/predictions.jsonl.
-% Exact fact identifiers and retrieval states are retained in qualitative_cases.csv.
-% Only query-condition relations are shown; this is not the full retrieved graph.
-\begin{tikzpicture}[
-  x=1cm,y=1cm,
-  font=\fontsize{10.5}{12.5}\selectfont,
-  event/.style={draw=gray!70,line width=0.6pt,fill=white,rectangle,minimum width=2.2cm,minimum height=0.60cm,inner sep=3pt},
-  context/.style={draw=gray!70,line width=0.6pt,fill=white,rectangle,minimum width=3.05cm,minimum height=0.60cm,inner sep=3pt},
-  predicted/.style={draw=orange!85!black,line width=1.0pt},
-  observed/.style={->,>=stealth,draw=blue!65!black,line width=0.8pt},
-  missing/.style={->,>=stealth,draw=red!75!black,dashed,line width=0.8pt},
-  relation/.style={font=\fontsize{9.5}{11}\selectfont,fill=white,inner sep=1.2pt},
-  note/.style={font=\fontsize{9.5}{11}\selectfont}
-]
-  % (a) Both road and time-period support were retrieved.
-  \node[event] (a-root) at (1.3,9.5) {A-1049504};
-  \node[note,above=2pt] at (a-root.north) {锚点事故};
-  \node[context] (a-road) at (6.5,10.15) {Warwick Ave};
-  \node[context] (a-time) at (6.5,8.85) {日间平峰};
-  \node[event,predicted] (a-answer) at (12.0,9.5) {A-709621};
-  \node[note,above=2pt] at (a-answer.north) {标准／预测答案};
-  \draw[observed] (a-root) -- node[relation,above] {道路} (a-road);
-  \draw[observed] (a-root) -- node[relation,below] {时段} (a-time);
-  \draw[observed] (a-answer) -- node[relation,above] {道路} (a-road);
-  \draw[observed] (a-answer) -- node[relation,below] {时段} (a-time);
-  \node at (7.5,8.05) {(a) 答案正确且证据完整（4/4）};
-
-  % (b) The gold target has complete support, but a road-only distractor wins.
-  \node[event] (b-root) at (1.3,6.2) {A-3181178};
-  \node[note,above=2pt] at (b-root.north) {锚点事故};
-  \node[context] (b-road) at (6.5,6.9) {Charles St};
-  \node[context] (b-time) at (6.5,5.5) {日间平峰};
-  \node[event] (b-gold) at (12.0,5.7) {A-209507};
-  \node[note,below=2pt] at (b-gold.south) {标准答案};
-  \node[event,predicted] (b-prediction) at (12.0,7.0) {A-2373379};
-  \node[note,above=2pt] at (b-prediction.north) {预测答案};
-  \draw[observed] (b-root) -- node[relation,above] {道路} (b-road);
-  \draw[observed] (b-root) -- node[relation,below] {时段} (b-time);
-  \draw[observed] (b-gold) -- node[relation,sloped,above,pos=0.48] {道路} (b-road);
-  \draw[observed] (b-gold) -- node[relation,below] {时段} (b-time);
-  \draw[observed] (b-prediction) -- node[relation,above] {道路} (b-road);
-  \node at (7.5,4.6) {(b) 证据完整但候选排序错误（4/4）};
-
-  % (c) The level value is correct although the target's weather edge is absent.
-  \node[event] (c-root) at (1.3,2.9) {A-1016344};
-  \node[note,above=2pt] at (c-root.north) {锚点事故};
-  \node[context,minimum width=2.6cm] (c-road) at (5.8,3.5) {I-95 S};
-  \node[context,minimum width=2.6cm] (c-weather) at (5.8,2.2) {晴朗};
-  \node[event] (c-target) at (10.2,2.9) {A-695042};
-  \node[note,above=2pt] at (c-target.north) {目标事故};
-  \node[event,predicted,minimum width=1.55cm] (c-level) at (14.1,2.9) {等级3};
-  \node[note,below=2pt] at (c-level.south) {预测值};
-  \draw[observed] (c-root) -- node[relation,above] {道路} (c-road);
-  \draw[observed] (c-root) -- node[relation,below] {天气} (c-weather);
-  \draw[observed] (c-target) -- node[relation,above] {道路} (c-road);
-  \draw[missing] (c-target) -- node[relation,below] {天气} (c-weather);
-  \draw[observed] (c-target) -- node[relation,above] {影响等级} (c-level);
-  \node at (7.5,1.45) {(c) 答案值正确但证据不完整（4/5）};
-
-  % Common legend. Dashed red edges are annotated gold facts, not observations.
-  \draw[observed] (0.4,0.40) -- (1.25,0.40);
-  \node[note,anchor=west] at (1.38,0.40) {已检索关系};
-  \draw[missing] (5.0,0.40) -- (5.85,0.40);
-  \node[note,anchor=west] at (5.98,0.40) {未检索的标准支持边};
-  \node[draw=orange!85!black,line width=1.0pt,minimum width=0.60cm,minimum height=0.35cm,inner sep=0pt] at (11.0,0.40) {};
-  \node[note,anchor=west] at (11.45,0.40) {预测实体或字段值};
+% Real matched case: 09709b691b1e860345ead2f5, seed17.
+% Source: qualitative_cases_abc.json; lines are retrieved facts, not attention traces.
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1.35cm,y=1cm,font=\fontsize{9.5}{11.5}\selectfont,
+ n/.style={draw=gray!65,rounded corners=1pt,align=center,minimum height=.55cm,minimum width=1.7cm,inner sep=3pt},
+ edge/.style={->,>=stealth,blue!65!black,line width=.7pt},
+ absent/.style={edge,red!70!black,dashed},
+ lab/.style={fill=white,inner sep=1pt,font=\fontsize{9}{11}\selectfont},
+ toplab/.style={lab,midway}]
+\node[anchor=west,align=left,text width=18.3cm] at (0,15.3) {问题：除A-5691424之外，同城同街道的其他事故明确记录了哪些受影响部位？\\标准答案：右路肩（right shoulder）。};
+\begin{scope}[yshift=13.5cm]
+\node[anchor=west,font=\fontsize{10}{12}\selectfont\bfseries] at (0,.95) {(a) 去除检索中的问题更新};
+\node[n] (aroot) at (1,0) {A-5691424};
+\node[n] (aroad) at (3.8,0) {I-95};
+\node[n] (atarget) at (6.6,0) {A-5396309};
+\node[n] (atb) at (9.5,0) {目标阻断事件};
+\node[n,] (aright) at (12.6,0) {右路肩};
+\node[n] (asb) at (3.8,-1.35) {原事故阻断事件};
+\node[n,draw=orange!85!black,line width=1pt] (aleft) at (7.2,-1.35) {左车道};
+\node[n,] (astate) at (11,-1.35) {blocked（阻断）};
+\draw[edge] (aroot)--node[toplab]{道路}(aroad);
+\draw[edge] (atarget)--node[toplab]{道路}(aroad);
+\draw[absent] (atarget)--node[toplab]{包含事件}(atb);
+\draw[absent] (atb)--node[toplab]{受影响部位}(aright);
+\draw[edge] (aroot)--node[toplab,sloped]{包含事件}(asb);
+\draw[edge] (asb)--node[toplab]{受影响部位}(aleft);
+\draw[edge] (asb.south)--++(0,-.85)--node[toplab]{阻断状态}(11,-2.475)--(astate.south);
+\node[anchor=west] at (0,-3.2) {候选前3名：左车道；blocked；其他阻断事件。支持事实覆盖：2/4。};
+\end{scope}
+\begin{scope}[yshift=8.8cm]
+\node[anchor=west,font=\fontsize{10}{12}\selectfont\bfseries] at (0,.95) {(b) 去除Mamba选择性过滤};
+\node[n] (broot) at (1,0) {A-5691424};
+\node[n] (broad) at (3.8,0) {I-95};
+\node[n] (btarget) at (6.6,0) {A-5396309};
+\node[n] (btb) at (9.5,0) {目标阻断事件};
+\node[n,] (bright) at (12.6,0) {右路肩};
+\node[n] (bsb) at (3.8,-1.35) {原事故阻断事件};
+\node[n,] (bleft) at (7.2,-1.35) {左车道};
+\node[n,draw=orange!85!black,line width=1pt] (bstate) at (11,-1.35) {blocked（阻断）};
+\draw[edge] (broot)--node[toplab]{道路}(broad);
+\draw[edge] (btarget)--node[toplab]{道路}(broad);
+\draw[edge] (btarget)--node[toplab]{包含事件}(btb);
+\draw[edge] (btb)--node[toplab]{受影响部位}(bright);
+\draw[edge] (broot)--node[toplab,sloped]{包含事件}(bsb);
+\draw[edge] (bsb)--node[toplab]{受影响部位}(bleft);
+\draw[edge] (bsb.south)--++(0,-.85)--node[toplab]{阻断状态}(11,-2.475)--(bstate.south);
+\node[anchor=west] at (0,-3.2) {候选前3名：blocked；右路肩；左车道。支持事实覆盖：4/4。};
+\end{scope}
+\begin{scope}[yshift=4.1cm]
+\node[anchor=west,font=\fontsize{10}{12}\selectfont\bfseries] at (0,.95) {(c) 完整模型};
+\node[n] (croot) at (1,0) {A-5691424};
+\node[n] (croad) at (3.8,0) {I-95};
+\node[n] (ctarget) at (6.6,0) {A-5396309};
+\node[n] (ctb) at (9.5,0) {目标阻断事件};
+\node[n,draw=orange!85!black,line width=1pt] (cright) at (12.6,0) {右路肩};
+\node[n] (csb) at (3.8,-1.35) {原事故阻断事件};
+\node[n,] (cleft) at (7.2,-1.35) {左车道};
+\node[n,] (cstate) at (11,-1.35) {blocked（阻断）};
+\draw[edge] (croot)--node[toplab]{道路}(croad);
+\draw[edge] (ctarget)--node[toplab]{道路}(croad);
+\draw[edge] (ctarget)--node[toplab]{包含事件}(ctb);
+\draw[edge] (ctb)--node[toplab]{受影响部位}(cright);
+\draw[edge] (croot)--node[toplab,sloped]{包含事件}(csb);
+\draw[edge] (csb)--node[toplab]{受影响部位}(cleft);
+\draw[edge] (csb.south)--++(0,-.85)--node[toplab]{阻断状态}(11,-2.475)--(cstate.south);
+\node[anchor=west] at (0,-3.2) {候选前3名：右路肩；左车道；blocked。支持事实覆盖：4/4。};
+\end{scope}
+\node[anchor=west,font=\fontsize{9.5}{11.5}\selectfont] at (0,.15) {蓝色实线：已检索关系；红色虚线：缺失的标准支持关系；橙色边框：预测答案。};
 \end{tikzpicture}
+}

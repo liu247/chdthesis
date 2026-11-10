@@ -1,56 +1,39 @@
-% Source: results/chapter02_20261027_v2/sensitivity.json.
-% Fixed seed-17 weights; no smoothing, interpolation samples, or error bands.
-% The two CSV files retain the exact measured values to 12 decimal places.
+% Source: results/parameters_tau025_20261110/summary.json.
+% Fixed retrained full-model seed-17 weights; H_max=4; K sweep uses tau=.25.
 \usepgfplotslibrary{groupplots}
 \begin{tikzpicture}
   \definecolor{chTwoBudgetBlue}{RGB}{67,111,219}
+  \definecolor{chTwoBudgetOrange}{RGB}{217,119,36}
   \begin{groupplot}[
-    group style={group size=2 by 2,horizontal sep=1.25cm,vertical sep=1.30cm},
-    width=6.7cm,height=3.85cm,
+    group style={group size=2 by 1,horizontal sep=1.9cm},
+    width=6.35cm,height=4.6cm,
     /tikz/font=\fontsize{10.5}{12.5}\selectfont,
     tick label style={font=\fontsize{10.5}{12.5}\selectfont},
     label style={font=\fontsize{10.5}{12.5}\selectfont},
     axis background/.style={fill=white},
     axis line style={draw=gray!75,line width=0.5pt},
     tick style={draw=black,line width=0.4pt},
-    tick align=inside,
-    axis lines=box,
-    grid=none,
-    scaled ticks=false,
-    enlarge x limits=false,
-    clip=true,
-    every axis plot/.append style={color=chTwoBudgetBlue,line width=0.85pt,mark=none}
+    tick align=inside,axis lines=box,grid=none,scaled ticks=false,
+    ymin=85,ymax=100,ytick={85,90,95,100},
+    ylabel={指标值（\%）},
+    legend style={draw=none,fill=none,font=\small,at={(0.5,1.04)},anchor=south,legend columns=2},
+    every axis plot/.append style={line width=0.85pt,mark size=2pt}
   ]
     \nextgroupplot[
-      xmin=0.8,xmax=4.2,xtick={1,2,3,4},
-      ymin=0,ymax=100,ytick={0,25,50,75,100},
-      xlabel={(a) 最大检索跳数 $H$},
-      ylabel={多跳 Hits@1（\%）}
+      xmin=0.13,xmax=0.57,xtick={0.15,0.25,0.35,0.45,0.55},
+      xlabel={(a) 相关性阈值 $\tau$}
     ]
-    \addplot[color=chTwoBudgetBlue,line width=0.85pt,mark=none] table[x=H,y=multi_hop_hits1_percent,col sep=comma]{figures/chapter02/budget_h.csv};
-
+    \addplot[color=chTwoBudgetBlue,mark=*] table[x=tau,y=hits1_percent,col sep=comma]{figures/chapter02/parameter_tau.csv};
+    \addlegendentry{Hits@1}
+    \addplot[color=chTwoBudgetOrange,mark=square*,dashed,mark options={solid,draw=chTwoBudgetOrange,fill=chTwoBudgetOrange,line width=0.4pt}] table[x=tau,y=cer_percent,col sep=comma]{figures/chapter02/parameter_tau.csv};
+    \addlegendentry{CER}
     \nextgroupplot[
       xmin=2,xmax=34,xtick={4,8,16,32},
-      ymin=0,ymax=100,ytick={0,25,50,75,100},
-      xlabel={(b) 每跳候选预算 $K$},
-      ylabel={多跳 Hits@1（\%）}
+      xlabel={(b) 每跳保留数量 $K$}
     ]
-    \addplot[color=chTwoBudgetBlue,line width=0.85pt,mark=none] table[x=K,y=multi_hop_hits1_percent,col sep=comma]{figures/chapter02/budget_k.csv};
-
-    \nextgroupplot[
-      xmin=0.8,xmax=4.2,xtick={1,2,3,4},
-      ymin=0,ymax=6,ytick={0,2,4,6},
-      xlabel={(c) 最大检索跳数 $H$},
-      ylabel={平均节点数}
-    ]
-    \addplot[color=chTwoBudgetBlue,line width=0.85pt,mark=none] table[x=H,y=mean_nodes,col sep=comma]{figures/chapter02/budget_h.csv};
-
-    \nextgroupplot[
-      xmin=2,xmax=34,xtick={4,8,16,32},
-      ymin=0,ymax=6,ytick={0,2,4,6},
-      xlabel={(d) 每跳候选预算 $K$},
-      ylabel={平均节点数}
-    ]
-    \addplot[color=chTwoBudgetBlue,line width=0.85pt,mark=none] table[x=K,y=mean_nodes,col sep=comma]{figures/chapter02/budget_k.csv};
+    \addplot[color=chTwoBudgetBlue,mark=*] table[x=K,y=hits1_percent,col sep=comma]{figures/chapter02/parameter_k.csv};
+    \addlegendentry{Hits@1}
+    \addplot[color=chTwoBudgetOrange,mark=square*,dashed,mark options={solid,draw=chTwoBudgetOrange,fill=chTwoBudgetOrange,line width=0.4pt}] table[x=K,y=cer_percent,col sep=comma]{figures/chapter02/parameter_k.csv};
+    \addlegendentry{CER}
   \end{groupplot}
 \end{tikzpicture}
