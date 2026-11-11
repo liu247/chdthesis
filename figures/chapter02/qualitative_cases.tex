@@ -7,6 +7,12 @@
  absent/.style={edge,red!70!black,dashed},
  lab/.style={fill=white,inner sep=1pt,font=\fontsize{9}{11}\selectfont},
  toplab/.style={lab,midway}]
+\draw[edge] (2.1,0)--(2.8,0);
+\node[anchor=west] at (2.9,0) {已检索关系};
+\draw[absent] (5.4,0)--(6.1,0);
+\node[anchor=west] at (6.2,0) {缺失的标准支持关系};
+\draw[draw=orange!85!black,line width=1pt,rounded corners=1pt] (10.05,-.17) rectangle (10.6,.17);
+\node[anchor=west] at (10.7,0) {预测答案};
 \node[anchor=west,align=left,text width=18.3cm] at (0,15.3) {问题：除A-5691424之外，同城同街道的其他事故明确记录了哪些受影响部位？\\标准答案：右路肩（right shoulder）。};
 \begin{scope}[yshift=13.5cm]
 \node[anchor=west,font=\fontsize{10}{12}\selectfont\bfseries] at (0,.95) {(a) 去除检索中的问题更新};
@@ -65,6 +71,5 @@
 \draw[edge] (csb.south)--++(0,-.85)--node[toplab]{阻断状态}(11,-2.475)--(cstate.south);
 \node[anchor=west] at (0,-3.2) {候选前3名：右路肩；左车道；blocked。支持事实覆盖：4/4。};
 \end{scope}
-\node[anchor=west,font=\fontsize{9.5}{11.5}\selectfont] at (0,.15) {蓝色实线：已检索关系；红色虚线：缺失的标准支持关系；橙色边框：预测答案。};
 \end{tikzpicture}
 }
