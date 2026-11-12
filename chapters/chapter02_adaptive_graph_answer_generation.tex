@@ -182,7 +182,14 @@ m\in\mathcal{M}_i,\ r\in\mathcal{R},\ \delta_r(\alpha_i,m)=1
 
 \section{上下文语义引导的自适应知识图构建策略}
 
-交通事故知识图谱包含不同事故及其相关事实，而具体问题所需的知识范围与关联深度并不相同。为从中获取与问题相关的知识，本节采用上下文语义引导的自适应构图策略。首先，构建并训练语义检索器，学习完整问题与候选三元组之间的匹配关系。随后，以问题实体初始化检索范围，利用检索器逐跳筛选事实，并根据检索结果更新问题上下文与下一跳候选范围。最后，将保留的三元组组织为问题相关图中的初始关系与动态关系。
+交通事故知识图谱包含不同事故及其相关事实，而具体问题所需的知识范围与关联深度并不相同。为从中获取与问题相关的知识，本节采用上下文语义引导的自适应构图策略。首先，构建并训练语义检索器，学习完整问题与候选三元组之间的匹配关系。随后，以问题实体初始化检索范围，利用检索器逐跳筛选事实，并根据检索结果更新问题上下文与下一跳候选范围。最后，将保留的三元组组织为问题相关图中的初始关系与动态关系。整体流程如图~\ref{fig:ch2-adaptive-graph} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{chapter02/adaptive_graph_construction.pdf}
+  \caption{上下文语义引导的自适应知识图构建流程}
+  \label{fig:ch2-adaptive-graph}
+\end{figure}
 
 \subsection{基于语义匹配的知识检索器构建}
 
@@ -247,11 +254,16 @@ q^{(h+1)}&=\operatorname{Concat}\bigl(q^{(h)},\operatorname{Text}(t_h^\star)\big
 
 检索结束后，以累计获得的实体为节点、三元组中的关系为有向边，得到问题相关图 $\mathcal{G}_q$。图中的节点沿用交通事故知识图谱中的统一标识，包含问题实体、检索经过的中间实体及候选答案实体。
 
-% 图表位置留空：自适应多跳检索与问题相关图构建示意图。
-
 \section{图结构编码与选择性知识增强机制}
 
-为利用问题相关图中的实体及其联系识别答案，本文将图结构编码与问题引导的选择性过滤相结合。首先，通过图卷积聚合邻域信息，建立节点的结构表示。随后，将问题语义引入 Mamba 的状态更新过程，调节节点信息的保留与传递。最后，利用增强后的节点表示计算候选实体的答案概率。
+为利用问题相关图中的实体及其联系识别答案，本文将图结构编码与问题引导的选择性过滤相结合。首先，通过图卷积聚合邻域信息，建立节点的结构表示。随后，将问题语义引入 Mamba 的状态更新过程，调节节点信息的保留与传递。最后，利用增强后的节点表示计算候选实体的答案概率，整体框架如图~\ref{fig:ch2-graph-enhancement} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{chapter02/graph_encoding_mamba.pdf}
+  \caption{图结构编码与选择性知识增强框架}
+  \label{fig:ch2-graph-enhancement}
+\end{figure}
 
 \subsection{实体关系表示与邻域信息传播}
 
@@ -310,8 +322,6 @@ y_{i,k}&=\bm{c}_i^{\top}\bm{s}_{i,k},
 \bm{z}_i=\operatorname{LayerNorm}(\bm{y}_i\odot\bm{u}_i),
 \end{equation}
 其中，$\odot$ 表示逐元素乘法，$\operatorname{LayerNorm}$ 表示层归一化，$\bm{z}_i\in\mathbb{R}^{d}$ 为第 $i$ 个节点经过选择性过滤后的表示。
-
-% 图表位置留空：图结构编码与 Graph-based Mamba 模块图。
 
 \subsection{知识增强表示与答案预测}
 
